@@ -21,4 +21,4 @@ for line in sys.stdin:
         current_count = count
         current_word = word
 if current_word == word:
-    print('{}\t{}'.format(current_count, current_count))
+    print('{}\t{}'.format(current_word, current_count))
