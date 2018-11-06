@@ -9,17 +9,25 @@ block_count = 0
 curr_block = []
 
 for line in sys.stdin:
-    line = ' '.join(line.strip().split()[1:]).lower()
+    #line = ' '.join(line.strip().split()[1:]).lower()
+    line_split = line.strip().split()
+    # Pos 0  = byte offset
+    # Pos 1  = filename
+    # Pos 2+ = line
+    filename = line_split[1]
+    line = ' '.join(line_split[2:]).lower()
+    #line = '\t'.join(line.strip().split('\t')[1:]).lower()
     if len(line) == 0:
         # Skip empty lines, TODO: something else here?
         continue
+    #filename, line = line.split('\t', 1)
     in_single_sentence = False
     if len(curr_block) == 0:
         curr_block = [line]
         in_single_sentence = True
     elif line[0] == '"':
         # End the previous block
-        print('{}\t{}'.format(block_count, ' '.join(curr_block)))
+        print('{}\t{}'.format('{},{}'.format(block_count, filename), ' '.join(curr_block)))
         curr_block = [line]
         block_count += 1
         in_single_sentence = True
@@ -36,7 +44,7 @@ for line in sys.stdin:
         if not in_single_sentence:
             # Because we've already added this line to curr_block
             curr_block.append(line)
-        print('{}\t{}'.format(block_count, ' '.join(curr_block)))
+        print('{}\t{}'.format('{},{}'.format(block_count, filename), ' '.join(curr_block)))
         curr_block = []
         block_count += 1
     elif not in_single_sentence:
