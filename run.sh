@@ -15,7 +15,7 @@ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming-2.6.0-cdh5.13.0.jar \
 	-mapper "/usr/local/bin/python3 mapper.py" \
 	-file reducer.py \
 	-reducer "/usr/local/bin/python3 reducer.py" \
-	-input cs626/project/$1 \
+	-input cs626/project/data/books/* \
 	-inputformat cs626.sentence.preprocessing.format.LineNumberInputFormat \
 	-output cs626/project/output
 hadoop fs -copyToLocal cs626/project/output/* $dir/
